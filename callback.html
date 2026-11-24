@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Connecting to TikTok · RuneBones</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <img src="assets/icon-180.png" alt="" />
+        <a href="./">RUNEBONES</a>
+      </header>
+      <main class="doc">
+        <h1 id="title">Returning to RuneBones Studio…</h1>
+        <p id="msg" class="date">TikTok sent you back here. Handing the sign-in over to the RuneBones Studio app on this computer.</p>
+      </main>
+      <footer>
+        <nav>
+          <a href="./">Home</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </nav>
+      </footer>
+    </div>
+    <script>
+      // TikTok Login Kit (Web) redirects here with ?code&state (or ?error). The RuneBones Studio
+      // tool runs on this computer; its port travels inside `state` as "<port>.<random>".
+      (function () {
+        var q = new URLSearchParams(location.search);
+        var state = q.get('state') || '';
+        var port = /^(\d{4,5})\./.test(state) ? state.split('.')[0] : '3455';
+        if (!q.get('code') && !q.get('error')) {
+          document.getElementById('title').textContent = 'Nothing to do here';
+          document.getElementById('msg').textContent = 'This page finishes a TikTok sign-in from RuneBones Studio.';
+          return;
+        }
+        setTimeout(function () {
+          location.replace('http://127.0.0.1:' + port + '/callback' + location.search);
+        }, 1200);
+      })();
+    </script>
+  </body>
+</html>
